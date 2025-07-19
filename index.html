@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Converge TV Player</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.5.0/shaka-player.compiled.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    video {
+      width: 90%;
+      max-width: 960px;
+      outline: none;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Converge TV Player</h1>
+  <video id="video" controls autoplay></video>
+  <script>
+    const CONVRG_MANIFEST_BASE = 'https://convrgkey.reusora.org/001/2/';
+    const CONVRG_MANIFEST_SUFFIX = '/manifest.mpd?virtualDomain=001.live_hls.zte.com&IASHttpSessionId=OTT';
+    const CONVRG_LICENSE_URI = 'https://convrgkey.reusora.org/widevine/?deviceId=02:00:00:00:00:00';
+    const fullManifest = CONVRG_MANIFEST_BASE + CONVRG_MANIFEST_SUFFIX;
+
+    async function initPlayer() {
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      player.configure({
+        drm: {
+          servers: {
+            'com.widevine.alpha': CONVRG_LICENSE_URI
+          }
+        }
+      });
+
+      try {
+        await player.load(fullManifest);
+        console.log('Video loaded successfully');
+      } catch (e) {
+        console.error('Error loading video:', e);
+      }
+    }
+
+    shaka.polyfill.installAll();
+    if (shaka.Player.isBrowserSupported()) {
+      initPlayer();
+    } else {
+      console.error('Browser not supported');
+    }
+  </script>
+</body>
+</html>
