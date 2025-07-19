@@ -1,8 +1,12 @@
-// package.json
 {
+  "name": "licenseuri",
+  "version": "1.0.0",
   "scripts": {
-    "build": "webpack --mode production", // or your build tool (Rollup, esbuild)
-    "deploy": "wrangler publish",         // if using Cloudflare Workers
+    "build": "webpack --mode production",
+    "deploy": "wrangler publish"
   },
-  // ...dependencies and worker config
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
+  }
 }
