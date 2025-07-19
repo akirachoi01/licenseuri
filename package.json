@@ -1,0 +1,8 @@
+// package.json
+{
+  "scripts": {
+    "build": "webpack --mode production", // or your build tool (Rollup, esbuild)
+    "deploy": "wrangler publish",         // if using Cloudflare Workers
+  },
+  // ...dependencies and worker config
+}
